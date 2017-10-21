@@ -20,7 +20,6 @@ import javax.swing.border.EmptyBorder;
 
 import org.lfmexi.alphagalaxy.config.Context;
 import org.lfmexi.alphagalaxy.entities.VideoGame;
-import org.lfmexi.alphagalaxy.exceptions.DuplicatedRecordException;
 import org.lfmexi.alphagalaxy.repositories.VideoGameRepository;
 
 public class VideoGamesView extends JFrame {
@@ -31,7 +30,6 @@ public class VideoGamesView extends JFrame {
   final private Context context;
   private JScrollPane scrollPane;
   private JList<VideoGame> list;
-  private JButton btnAnotherView;
 
   private Observer listObserver;
 
@@ -65,12 +63,10 @@ public class VideoGamesView extends JFrame {
     JButton btnAddVideoGame = new JButton("Add Video Game");
     btnAddVideoGame.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent e) {
-        try {
-          context.videoGameRepository().insert(new VideoGame(null, "Another", "XBOX"));
-        } catch (DuplicatedRecordException e1) {
-          // TODO Auto-generated catch block
-          e1.printStackTrace();
-        }
+        EventQueue.invokeLater(() -> {
+          VideoGameForm view = new VideoGameForm(context);
+          view.setVisible(true);
+        });
       }
     });
 
@@ -80,18 +76,6 @@ public class VideoGamesView extends JFrame {
     contentPane.add(scrollPane, BorderLayout.CENTER);
 
     contentPane.add(btnAddVideoGame, BorderLayout.WEST);
-
-    btnAnotherView = new JButton("Another View");
-    btnAnotherView.addActionListener(new ActionListener() {
-      public void actionPerformed(ActionEvent e) {
-        EventQueue.invokeLater(() -> {
-          VideoGamesView view = new VideoGamesView(context);
-          view.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-          view.setVisible(true);
-        });
-      }
-    });
-    contentPane.add(btnAnotherView, BorderLayout.SOUTH);
   }
 
   private void loadVideoGamesList() {

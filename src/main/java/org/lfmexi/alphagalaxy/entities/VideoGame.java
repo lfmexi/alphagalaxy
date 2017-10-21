@@ -64,7 +64,7 @@ public class VideoGame {
 
   @Override
   public String toString() {
-    return String.format("VideoGame [id=%s, title=%s, platform=%s]", id, title, platform);
+    return String.format("[id=%s, title=%s, platform=%s]", id, title, platform);
   }
 
   @Override

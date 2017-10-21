@@ -18,8 +18,6 @@ import org.lfmexi.alphagalaxy.util.List;
  */
 public class App {
   public static void main(String[] args) throws DuplicatedRecordException {
-    System.out.println("Hello World!");
-
     final List<VideoGame> list = new AlphaLinkedList<VideoGame>();
 
     final VideoGameRepository repository = new VideoGameListBasedRepository(list);

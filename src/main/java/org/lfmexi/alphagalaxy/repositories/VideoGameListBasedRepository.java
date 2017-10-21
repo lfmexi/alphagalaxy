@@ -17,7 +17,6 @@ public final class VideoGameListBasedRepository extends Observable implements Vi
   }
 
   private void notifyChange() {
-    System.out.println(this.countObservers());
     setChanged();
     notifyObservers(this);
   }

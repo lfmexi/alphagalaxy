@@ -76,6 +76,7 @@ public class VideoGameForm extends JFrame {
     }
 
     VideoGameRepository repository = context.videoGameRepository();
+
     try {
       repository.insert(new VideoGame(null, title, platform));
     } catch (DuplicatedRecordException e) {

@@ -1,6 +1,6 @@
 package org.lfmexi.alphagalaxy.exceptions;
 
-public class DuplicatedRecordException extends Exception {
+public class DuplicatedRecordException extends RuntimeException {
 
   /**
    * 

@@ -2,12 +2,12 @@ package org.lfmexi.alphagalaxy.repositories;
 
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.Observable;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import org.lfmexi.alphagalaxy.entities.VideoGame;
 import org.lfmexi.alphagalaxy.repositories.exceptions.DuplicatedIdException;
+import org.springframework.beans.factory.annotation.Autowired;
 
 public class VideoGameInMemoryRepository implements Repo<VideoGame> {
 
@@ -15,9 +15,10 @@ public class VideoGameInMemoryRepository implements Repo<VideoGame> {
 
   private List<VideoGame> videoGames;
 
-  private Observable observable;
+  private VideoGameRepoObservable observable;
 
-  public void setObservable(Observable observable) {
+  @Autowired
+  public void setObservable(VideoGameRepoObservable observable) {
     this.observable = observable;
   }
 
@@ -52,7 +53,7 @@ public class VideoGameInMemoryRepository implements Repo<VideoGame> {
     }
 
     videoGames.add(videoGame);
-    notifyObservers();
+    notifyObservers(videoGame);
   }
 
   @Override
@@ -65,9 +66,9 @@ public class VideoGameInMemoryRepository implements Repo<VideoGame> {
     return videoGames.stream().filter(predicate).collect(Collectors.toList());
   }
 
-  private void notifyObservers() {
+  private void notifyObservers(VideoGame videoGame) {
     if (observable != null) {
-      observable.notifyAll();
+      observable.notifyChange(videoGame);
     }
   }
 }
